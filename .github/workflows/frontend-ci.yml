@@ -1,7 +1,4 @@
 name: Frontend CI
-variables:
-  REPOSITORY_URL: 862841488049.dkr.ecr.us-east-1.amazonaws.com
-  REGION: us-east-1
 
 on:
   push:
@@ -27,7 +24,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: $REGION
+        aws-region: us-east-1
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -36,7 +33,7 @@ jobs:
     - name: Build, tag, and push docker image to Amazon ECR
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        REPOSITORY: $REPOSITORY_URL
+        REPOSITORY: 862841488049.dkr.ecr.us-east-1.amazonaws.com
         IMAGE_TAG: 1.1
       run: |
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
