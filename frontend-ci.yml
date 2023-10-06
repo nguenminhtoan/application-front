@@ -1,0 +1,28 @@
+name: Frontend CI
+variables:
+  REPOSITORY_URL: 862841488049.dkr.ecr.us-east-1.amazonaws.com
+  REGION: us-east-1
+
+on:
+  push:
+    branches:
+      - main
+
+stages:
+  - build
+  - deploy
+
+build:
+stage: build
+  script:
+    - docker build -t application-front -f ./Dockerfile .
+    - docker tag application-front $REPOSITORY_URL/demo-app:${CI_COMMIT_SHORT_SHA}
+    - docker push $REPOSITORY_URL/application-front:${CI_COMMIT_SHORT_SHA}
+  only:
+    - master
+
+deploy:
+stage: deploy
+environment: production
+script:
+    - kubectl set image deployment/application-front application-front=$REPOSITORY_URL/application-front:${CI_COMMIT_SHORT_SHA} --record

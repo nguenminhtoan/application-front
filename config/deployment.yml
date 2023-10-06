@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application-front
+  labels:
+    app: application-front
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: application-front
+  template:
+    metadata:
+      labels:
+        app: application-front
+    spec:
+      containers:
+        - name: application-front
+          image: 862841488049.dkr.ecr.us-east-1.amazonaws.com/application-front:latest
+          ports:
+            - containerPort: 3000
