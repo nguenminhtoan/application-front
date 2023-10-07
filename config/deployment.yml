@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: application-front
-          image: 862841488049.dkr.ecr.us-east-1.amazonaws.com/application-front:latest
+          image: 862841488049.dkr.ecr.us-east-1.amazonaws.com/application-front:1.2
           ports:
             - containerPort: 3000
